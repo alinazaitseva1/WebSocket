@@ -17,46 +17,37 @@ struct MessageEntity: Codable {
     var date     : Date!
     var type     : String!
     var body     : TextBody!
-    
-    private enum CodingKeys: String, CodingKey {
-        case nickname
-        case date
-        case type
-        case body
-    }
-    
-    init(from decoder: Decoder) throws {
-        
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        
-        nickname = try values.decode(String.self, forKey: .nickname)
-        date     = try values.decode(Date.self, forKey: .date)
-        type     = try values.decode(String.self, forKey: .type)
-        body     = try values.decode(TextBody.self, forKey: .body)
-    }
-    
-//    let data = ChatViewController..data(using: .utf8)!
-    let decoder = JSONDecoder()
-    
 }
 
-struct TextBody: Codable {
+extension MessageEntity {
     
-    // MARK: - Vars
-    
-    var text : String!
-    
-    private enum CodingKeys: String, CodingKey {
+    init(dictionary: Dictionary<String, Any>) {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.init())
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         
-        case text
-    }
-    
-    init(from decoder: Decoder) throws {
+        //self = decoder.decode(MessageEntity.self, from: )
         
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        
-        text   = try values.decode(String.self, forKey: .text)
     }
 }
 
+extension JSONDecoder {
+    
+    func decode(type: Decodable, from dictionary: Dictionary<String, Any>) {
+        do {
+            let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted) // 
+        }
+        catch {
+            print(error.localizedDescription)
+        }
+    }
+}
+    
+    struct TextBody: Codable {
+        
+        // MARK: - Vars
+        
+        var text : String!
+        
+}
 
