@@ -23,7 +23,7 @@ extension MessageEntity {
     
     init?(dictionary: Dictionary<String, Any>) {
         let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .formatted(DateFormatter.init())
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.yyMMdd)
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
         if let decodedObject = try? decoder.decode(MessageEntity.self, from: dictionary) {

@@ -18,7 +18,6 @@
 		DC8E461521873A1500EB8053 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC8E461321873A1500EB8053 /* LaunchScreen.storyboard */; };
 		DC8E462821875CBA00EB8053 /* JSONResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E462721875CBA00EB8053 /* JSONResponce.swift */; };
 		DC8E462A218849C100EB8053 /* DataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E4629218849C100EB8053 /* DataError.swift */; };
-		DC8E462C21884BC500EB8053 /* ApiResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E462B21884BC500EB8053 /* ApiResponse.swift */; };
 		DC8E46322188618A00EB8053 /* RegistrationStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC8E46312188618A00EB8053 /* RegistrationStoryboard.storyboard */; };
 		DC8E46342188624E00EB8053 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E46332188624E00EB8053 /* MessageEntity.swift */; };
 		DC8E46362188681300EB8053 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E46352188681300EB8053 /* RegistrationViewController.swift */; };
@@ -40,7 +39,6 @@
 		DC8E461621873A1500EB8053 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC8E462721875CBA00EB8053 /* JSONResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONResponce.swift; sourceTree = "<group>"; };
 		DC8E4629218849C100EB8053 /* DataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataError.swift; sourceTree = "<group>"; };
-		DC8E462B21884BC500EB8053 /* ApiResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiResponse.swift; sourceTree = "<group>"; };
 		DC8E46312188618A00EB8053 /* RegistrationStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = RegistrationStoryboard.storyboard; sourceTree = "<group>"; };
 		DC8E46332188624E00EB8053 /* MessageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntity.swift; sourceTree = "<group>"; };
 		DC8E46352188681300EB8053 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 			isa = PBXGroup;
 			children = (
 				DC8E462721875CBA00EB8053 /* JSONResponce.swift */,
-				DC8E462B21884BC500EB8053 /* ApiResponse.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -336,7 +333,6 @@
 				DC8E46362188681300EB8053 /* RegistrationViewController.swift in Sources */,
 				DC153D4B2189B8F20022CD22 /* Date+String.swift in Sources */,
 				DC8E463A2188A89600EB8053 /* MessageTableViewCell.swift in Sources */,
-				DC8E462C21884BC500EB8053 /* ApiResponse.swift in Sources */,
 				DC8E462821875CBA00EB8053 /* JSONResponce.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

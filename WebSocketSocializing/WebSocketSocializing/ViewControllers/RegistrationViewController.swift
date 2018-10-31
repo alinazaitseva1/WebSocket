@@ -12,6 +12,9 @@ class RegistrationViewController: UIViewController {
     
     // MARK: - Outlets
     
+    @IBOutlet weak var inputNameTextField: UITextField!
+    @IBOutlet weak var okButton: UIButton!
+    
     // MARK: - Actions
     
     @IBAction func pushOkButton(_ sender: UIButton) {

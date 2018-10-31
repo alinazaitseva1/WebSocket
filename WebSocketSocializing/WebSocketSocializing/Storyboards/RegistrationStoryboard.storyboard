@@ -79,6 +79,10 @@
                         <viewLayoutGuide key="safeArea" id="BeT-6z-Ftz"/>
                     </view>
                     <navigationItem key="navigationItem" id="uB8-eU-Hho"/>
+                    <connections>
+                        <outlet property="inputNameTextField" destination="STK-oj-0ZJ" id="wLg-7u-5WA"/>
+                        <outlet property="okButton" destination="F9P-5f-3Yv" id="RBt-Gc-82q"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="azs-Hp-AVJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
