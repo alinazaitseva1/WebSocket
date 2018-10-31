@@ -14,8 +14,7 @@ class ChatViewController: UIViewController {
     
     // MARK: - Vars
     
-    var messages: MessageEntity!
-    
+    let message = MessageEntity(dictionary: ChatViewController.messageDictionary)
 
     // MARK: - Const
     
@@ -26,10 +25,23 @@ class ChatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print(message)
     }
     
      // MARK: - Functions
+    
+}
+
+// MARK: - Extension
+
+extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
     
     
     

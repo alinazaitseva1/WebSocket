@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D24553C187A5FBC8F41B3471 /* Pods_WebSocketSocializing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 391474081F44A6CA32A855AF /* Pods_WebSocketSocializing.framework */; };
 		DC153D462189AFD50022CD22 /* JSONDecoder+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC153D452189AFD50022CD22 /* JSONDecoder+Dictionary.swift */; };
+		DC153D492189B84B0022CD22 /* DateFormatter+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC153D482189B84B0022CD22 /* DateFormatter+Date.swift */; };
+		DC153D4B2189B8F20022CD22 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC153D4A2189B8F20022CD22 /* Date+String.swift */; };
 		DC8E460B21873A1400EB8053 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E460A21873A1400EB8053 /* AppDelegate.swift */; };
 		DC8E460D21873A1400EB8053 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E460C21873A1400EB8053 /* ChatViewController.swift */; };
 		DC8E461021873A1400EB8053 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC8E460E21873A1400EB8053 /* Chat.storyboard */; };
@@ -27,6 +29,8 @@
 		391474081F44A6CA32A855AF /* Pods_WebSocketSocializing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebSocketSocializing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59CAF2631E69BA279DFC825B /* Pods-WebSocketSocializing.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebSocketSocializing.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WebSocketSocializing/Pods-WebSocketSocializing.debug.xcconfig"; sourceTree = "<group>"; };
 		DC153D452189AFD50022CD22 /* JSONDecoder+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Dictionary.swift"; sourceTree = "<group>"; };
+		DC153D482189B84B0022CD22 /* DateFormatter+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Date.swift"; sourceTree = "<group>"; };
+		DC153D4A2189B8F20022CD22 /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
 		DC8E460721873A1400EB8053 /* WebSocketSocializing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebSocketSocializing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC8E460A21873A1400EB8053 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC8E460C21873A1400EB8053 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +77,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		DC153D472189B8280022CD22 /* Date */ = {
+			isa = PBXGroup;
+			children = (
+				DC153D482189B84B0022CD22 /* DateFormatter+Date.swift */,
+				DC153D4A2189B8F20022CD22 /* Date+String.swift */,
+			);
+			path = Date;
+			sourceTree = "<group>";
+		};
 		DC8E45FE21873A1400EB8053 = {
 			isa = PBXGroup;
 			children = (
@@ -98,7 +111,6 @@
 				DC8E461D21873E4F00EB8053 /* Models */,
 				DC8E461C21873E3E00EB8053 /* ViewControllers */,
 				DC8E462421873F5E00EB8053 /* Enums */,
-				DC8E462621873F7300EB8053 /* Subclasses */,
 				DC8E462521873F6500EB8053 /* Extensions */,
 				DC8E461F21873E6000EB8053 /* Network */,
 				DC8E462121873E8500EB8053 /* Storyboards */,
@@ -188,16 +200,10 @@
 		DC8E462521873F6500EB8053 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DC153D472189B8280022CD22 /* Date */,
 				DC153D452189AFD50022CD22 /* JSONDecoder+Dictionary.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		DC8E462621873F7300EB8053 /* Subclasses */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Subclasses;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,12 +327,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC153D492189B84B0022CD22 /* DateFormatter+Date.swift in Sources */,
 				DC8E46342188624E00EB8053 /* MessageEntity.swift in Sources */,
 				DC8E460D21873A1400EB8053 /* ChatViewController.swift in Sources */,
 				DC8E460B21873A1400EB8053 /* AppDelegate.swift in Sources */,
 				DC8E462A218849C100EB8053 /* DataError.swift in Sources */,
 				DC153D462189AFD50022CD22 /* JSONDecoder+Dictionary.swift in Sources */,
 				DC8E46362188681300EB8053 /* RegistrationViewController.swift in Sources */,
+				DC153D4B2189B8F20022CD22 /* Date+String.swift in Sources */,
 				DC8E463A2188A89600EB8053 /* MessageTableViewCell.swift in Sources */,
 				DC8E462C21884BC500EB8053 /* ApiResponse.swift in Sources */,
 				DC8E462821875CBA00EB8053 /* JSONResponce.swift in Sources */,
