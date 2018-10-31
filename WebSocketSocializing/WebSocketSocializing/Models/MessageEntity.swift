@@ -21,33 +21,23 @@ struct MessageEntity: Codable {
 
 extension MessageEntity {
     
-    init(dictionary: Dictionary<String, Any>) {
+    init?(dictionary: Dictionary<String, Any>) {
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .formatted(DateFormatter.init())
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
-        //self = decoder.decode(MessageEntity.self, from: )
-        
-    }
-}
-
-extension JSONDecoder {
-    
-    func decode(type: Decodable, from dictionary: Dictionary<String, Any>) {
-        do {
-            let jsonData = try JSONSerialization.data(withJSONObject: dictionary, options: .prettyPrinted) // 
-        }
-        catch {
-            print(error.localizedDescription)
+        if let decodedObject = try? decoder.decode(MessageEntity.self, from: dictionary) {
+            self = decodedObject
+        } else {
+            return nil
         }
     }
 }
-    
-    struct TextBody: Codable {
-        
-        // MARK: - Vars
-        
-        var text : String!
-        
-}
 
+struct TextBody: Codable {
+    
+    // MARK: - Vars
+    
+    var text : String!
+    
+}

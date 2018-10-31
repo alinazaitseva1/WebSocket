@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D24553C187A5FBC8F41B3471 /* Pods_WebSocketSocializing.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 391474081F44A6CA32A855AF /* Pods_WebSocketSocializing.framework */; };
+		DC153D462189AFD50022CD22 /* JSONDecoder+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC153D452189AFD50022CD22 /* JSONDecoder+Dictionary.swift */; };
 		DC8E460B21873A1400EB8053 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E460A21873A1400EB8053 /* AppDelegate.swift */; };
 		DC8E460D21873A1400EB8053 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E460C21873A1400EB8053 /* ChatViewController.swift */; };
 		DC8E461021873A1400EB8053 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC8E460E21873A1400EB8053 /* Chat.storyboard */; };
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		391474081F44A6CA32A855AF /* Pods_WebSocketSocializing.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebSocketSocializing.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59CAF2631E69BA279DFC825B /* Pods-WebSocketSocializing.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebSocketSocializing.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WebSocketSocializing/Pods-WebSocketSocializing.debug.xcconfig"; sourceTree = "<group>"; };
+		DC153D452189AFD50022CD22 /* JSONDecoder+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Dictionary.swift"; sourceTree = "<group>"; };
 		DC8E460721873A1400EB8053 /* WebSocketSocializing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebSocketSocializing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC8E460A21873A1400EB8053 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC8E460C21873A1400EB8053 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 		DC8E462521873F6500EB8053 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DC153D452189AFD50022CD22 /* JSONDecoder+Dictionary.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				DC8E460D21873A1400EB8053 /* ChatViewController.swift in Sources */,
 				DC8E460B21873A1400EB8053 /* AppDelegate.swift in Sources */,
 				DC8E462A218849C100EB8053 /* DataError.swift in Sources */,
+				DC153D462189AFD50022CD22 /* JSONDecoder+Dictionary.swift in Sources */,
 				DC8E46362188681300EB8053 /* RegistrationViewController.swift in Sources */,
 				DC8E463A2188A89600EB8053 /* MessageTableViewCell.swift in Sources */,
 				DC8E462C21884BC500EB8053 /* ApiResponse.swift in Sources */,

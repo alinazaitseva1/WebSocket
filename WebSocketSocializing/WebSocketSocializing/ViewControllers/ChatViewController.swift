@@ -15,6 +15,7 @@ class ChatViewController: UIViewController {
     // MARK: - Vars
     
     var messages: MessageEntity!
+    
 
     // MARK: - Const
     
