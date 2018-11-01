@@ -11,6 +11,10 @@
 		DC153D462189AFD50022CD22 /* JSONDecoder+Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC153D452189AFD50022CD22 /* JSONDecoder+Dictionary.swift */; };
 		DC153D492189B84B0022CD22 /* DateFormatter+Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC153D482189B84B0022CD22 /* DateFormatter+Date.swift */; };
 		DC153D4B2189B8F20022CD22 /* Date+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC153D4A2189B8F20022CD22 /* Date+String.swift */; };
+		DC153D4E218AF3230022CD22 /* ChangeStateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC153D4D218AF3230022CD22 /* ChangeStateButton.swift */; };
+		DC153D51218AF6FC0022CD22 /* PublicConstans.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC153D50218AF6FC0022CD22 /* PublicConstans.swift */; };
+		DC153D53218B09B00022CD22 /* Dictionary+JSONString.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC153D52218B09B00022CD22 /* Dictionary+JSONString.swift */; };
+		DC153D55218B0EB70022CD22 /* MessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC153D54218B0EB70022CD22 /* MessageType.swift */; };
 		DC8E460B21873A1400EB8053 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E460A21873A1400EB8053 /* AppDelegate.swift */; };
 		DC8E460D21873A1400EB8053 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E460C21873A1400EB8053 /* ChatViewController.swift */; };
 		DC8E461021873A1400EB8053 /* Chat.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DC8E460E21873A1400EB8053 /* Chat.storyboard */; };
@@ -30,6 +34,10 @@
 		DC153D452189AFD50022CD22 /* JSONDecoder+Dictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+Dictionary.swift"; sourceTree = "<group>"; };
 		DC153D482189B84B0022CD22 /* DateFormatter+Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Date.swift"; sourceTree = "<group>"; };
 		DC153D4A2189B8F20022CD22 /* Date+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+String.swift"; sourceTree = "<group>"; };
+		DC153D4D218AF3230022CD22 /* ChangeStateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeStateButton.swift; sourceTree = "<group>"; };
+		DC153D50218AF6FC0022CD22 /* PublicConstans.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicConstans.swift; sourceTree = "<group>"; };
+		DC153D52218B09B00022CD22 /* Dictionary+JSONString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+JSONString.swift"; sourceTree = "<group>"; };
+		DC153D54218B0EB70022CD22 /* MessageType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageType.swift; sourceTree = "<group>"; };
 		DC8E460721873A1400EB8053 /* WebSocketSocializing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebSocketSocializing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC8E460A21873A1400EB8053 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DC8E460C21873A1400EB8053 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
@@ -84,6 +92,22 @@
 			path = Date;
 			sourceTree = "<group>";
 		};
+		DC153D4C218AF2F10022CD22 /* Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				DC153D4D218AF3230022CD22 /* ChangeStateButton.swift */,
+			);
+			path = Subclasses;
+			sourceTree = "<group>";
+		};
+		DC153D4F218AF52D0022CD22 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				DC153D50218AF6FC0022CD22 /* PublicConstans.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		DC8E45FE21873A1400EB8053 = {
 			isa = PBXGroup;
 			children = (
@@ -111,6 +135,8 @@
 				DC8E462421873F5E00EB8053 /* Enums */,
 				DC8E462521873F6500EB8053 /* Extensions */,
 				DC8E461F21873E6000EB8053 /* Network */,
+				DC153D4C218AF2F10022CD22 /* Subclasses */,
+				DC153D4F218AF52D0022CD22 /* Utilities */,
 				DC8E462121873E8500EB8053 /* Storyboards */,
 				DC8E462021873E7700EB8053 /* SupportingFiles */,
 				DC8E462221873E9400EB8053 /* Resources */,
@@ -190,6 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				DC8E4629218849C100EB8053 /* DataError.swift */,
+				DC153D54218B0EB70022CD22 /* MessageType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -199,6 +226,7 @@
 			children = (
 				DC153D472189B8280022CD22 /* Date */,
 				DC153D452189AFD50022CD22 /* JSONDecoder+Dictionary.swift */,
+				DC153D52218B09B00022CD22 /* Dictionary+JSONString.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -327,7 +355,11 @@
 				DC153D492189B84B0022CD22 /* DateFormatter+Date.swift in Sources */,
 				DC8E46342188624E00EB8053 /* MessageEntity.swift in Sources */,
 				DC8E460D21873A1400EB8053 /* ChatViewController.swift in Sources */,
+				DC153D53218B09B00022CD22 /* Dictionary+JSONString.swift in Sources */,
+				DC153D51218AF6FC0022CD22 /* PublicConstans.swift in Sources */,
 				DC8E460B21873A1400EB8053 /* AppDelegate.swift in Sources */,
+				DC153D4E218AF3230022CD22 /* ChangeStateButton.swift in Sources */,
+				DC153D55218B0EB70022CD22 /* MessageType.swift in Sources */,
 				DC8E462A218849C100EB8053 /* DataError.swift in Sources */,
 				DC153D462189AFD50022CD22 /* JSONDecoder+Dictionary.swift in Sources */,
 				DC8E46362188681300EB8053 /* RegistrationViewController.swift in Sources */,

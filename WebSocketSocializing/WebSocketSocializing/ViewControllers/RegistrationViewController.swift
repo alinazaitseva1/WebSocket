@@ -32,5 +32,11 @@ class RegistrationViewController: UIViewController {
         super.viewDidLoad()
 
     }
-
+    
+      // MARK: - TextField function
+    
+    @IBAction func textFieldEditingChanged(_ sender: UITextField) {
+        
+    }
+    
 }
