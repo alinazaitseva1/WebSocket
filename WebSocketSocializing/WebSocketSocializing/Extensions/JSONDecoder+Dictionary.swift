@@ -8,6 +8,8 @@
 
 import Foundation
 
+// - Extension to decode dictionary as data
+
 extension JSONDecoder {
     
     func decode<T>(_ type: T.Type, from dictionary: Dictionary<String, Any>) throws -> T where T : Decodable {

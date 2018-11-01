@@ -30,6 +30,7 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     private var messageText: String {
         return InputTextTextField.text!
     }
+    var nickname: String!
     
     // MARK: - Consts
     
@@ -37,29 +38,21 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     
     let mes = MessageEntity(dictionary: ChatViewController.messageDictionary)
     
-    
     // MARK: - Actions
     
     @IBAction func pushSendMessageButtom(_ sender: UIButton) {
         // TODO: - Create json from text(TextField) -> Model -> Array
-       
-        let message = MessageEntity(nickname: isTypingUserName.text, date: Date(), type: MessageType.sendMessage.rawValue, body: TextBody(text: messageText))
         
-        func convertToDictionary(text: String) -> [String: Any]? {
-            if let data = text.data(using: .utf8) {
-                do {
-                    return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-                } catch {
-                    print(error.localizedDescription)
-                }
-            }
-            return nil
-        }
+        _ = MessageEntity(nickname: nickname, date: Date(), type: MessageType.sendMessage.rawValue, body: TextBody(text: messageText))
         
-        //let dict = convertToDictionary(text: )
-        //print(dict)
+        let dict: [String : Any] = [ "nickname": nickname,
+        "date": "2018-09-21T12:45:12",
+        "type": MessageType.sendMessage.rawValue,
+        "body": [ "text": messageText ] ]
         
+        let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: [])
         
+        socket.write(data: jsonData!)
     }
     
     // MARK: - Init functions
@@ -88,16 +81,22 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         print("got some data: \(data.count)")
+        let receivedDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        if let type = receivedDictionary?[MessageType.sendMessage.rawValue] {
+            // HERE
+        }
     }
     
     // MARK: - TextField function
+    
     @IBAction func textFieldEditingChanged(_ sender: UITextField) {
         // Turning on/off send button
-        sendMessageButton.isEnabled = messageText.count == minimumSymbolsAmount
+        sendMessageButton.isEnabled = messageText.count >= minimumSymbolsAmount
     }
+
 }
 
-// MARK: - Extension
+// MARK: - Extension table view UITableViewDelegate, UITableViewDataSource
 
 extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -110,9 +109,9 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
         messageTableViewCell.messageLabel.layer.masksToBounds = true
         messageTableViewCell.messageLabel.layer.cornerRadius = 8
         
-        messageTableViewCell.createdLabel.text = message?.date.stringPresentation
-        messageTableViewCell.messageLabel.text = message?.body.text
-        messageTableViewCell.userNameLabel.text = message?.nickname
+        messageTableViewCell.createdLabel.text = mes?.date.stringPresentation
+        messageTableViewCell.messageLabel.text = mes?.body.text
+        messageTableViewCell.userNameLabel.text = mes?.nickname
         
         return messageTableViewCell
     }

@@ -19,6 +19,8 @@ struct MessageEntity: Codable {
     var body     : TextBody!
 }
 
+// MARK: - for converting data to dictionary
+
 extension MessageEntity {
     
     init?(dictionary: Dictionary<String, Any>) {
