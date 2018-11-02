@@ -18,42 +18,59 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     
     @IBOutlet weak var noConnectionView: UIView!
     @IBOutlet weak var isTypingView: UIView!
-    @IBOutlet weak var isTypingUserName: UILabel!
+    @IBOutlet weak var isTypingUserNameLabel: UILabel!
     @IBOutlet weak var inputTextView: UIView!
     @IBOutlet weak var showTypingView: UIView!
-    @IBOutlet weak var InputTextTextField: UITextField!
+    @IBOutlet weak var inputTextTextField: UITextField!
     @IBOutlet weak var sendMessageButton: ChangeStateButton!
     
     // MARK: - Vars
     
     var socket: WebSocket!
     private var messageText: String {
-        return InputTextTextField.text!
+        return inputTextTextField.text!
     }
     var nickname: String!
+    var messagesArray: [MessageEntity] = [] {
+        didSet{
+            uiTableView.reloadData()
+        }
+    }
     
     // MARK: - Consts
     
     static let messageDictionary : [String: Any] = [ "nickname":"name", "date":"2018-09-21T12:45:12","type":"sendMessage","body": [ "text": "Test Message" ] ]
     
-    let mes = MessageEntity(dictionary: ChatViewController.messageDictionary)
-    
     // MARK: - Actions
     
     @IBAction func pushSendMessageButtom(_ sender: UIButton) {
-        // TODO: - Create json from text(TextField) -> Model -> Array
-        
-        _ = MessageEntity(nickname: nickname, date: Date(), type: MessageType.sendMessage.rawValue, body: TextBody(text: messageText))
         
         let dict: [String : Any] = [ "nickname": nickname,
-        "date": "2018-09-21T12:45:12",
-        "type": MessageType.sendMessage.rawValue,
-        "body": [ "text": messageText ] ]
+                                     "date": "2018-09-21T12:45:12",
+                                     "type": MessageType.sendMessage.rawValue,
+                                     "body": [ "text": messageText ] ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: [])
+        
+        socket.write(data: jsonData!)
+        inputTextTextField.text = "" // to clear textfield after message was sent
+        
+    }
+    
+    // MARK: - Someone else's message imitation
+    
+    @IBAction func alienMessage(_ sender: UIBarButtonItem) {
+        
+        let dict: [String : Any] = [ "nickname": "John",
+                                     "date": "2018-09-21T12:45:12",
+                                     "type": MessageType.sendMessage.rawValue,
+                                     "body": [ "text": "Blablablablablabla bla" ] ]
         
         let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: [])
         
         socket.write(data: jsonData!)
     }
+    
     
     // MARK: - Init functions
     
@@ -63,6 +80,12 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         socket = WebSocket(url: URL(string: "ws://echo.websocket.org")!)
         socket.delegate = self
         socket.connect()
+        noConnectionView.isHidden = true
+        isTypingView.isHidden = true
+    }
+    
+    deinit {
+        socket.disconnect()
     }
     
     // - WebSocketDelegate functions
@@ -75,15 +98,14 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         print("websocket is disconnected: \(String(describing: error?.localizedDescription))")
     }
     
-    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) {
-        print("got some text: \(text)")
-    }
+    func websocketDidReceiveMessage(socket: WebSocketClient, text: String) { }
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         print("got some data: \(data.count)")
         let receivedDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-        if let type = receivedDictionary?[MessageType.sendMessage.rawValue] {
-            // HERE
+        if MessageType.sendMessage.rawValue == receivedDictionary?["type"] as? String {
+            let message = MessageEntity(dictionary: receivedDictionary!)
+            messagesArray.append(message!)
         }
     }
     
@@ -93,26 +115,28 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         // Turning on/off send button
         sendMessageButton.isEnabled = messageText.count >= minimumSymbolsAmount
     }
-
 }
 
 // MARK: - Extension table view UITableViewDelegate, UITableViewDataSource
 
 extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1 // return arrayOfMessages.count
+        return messagesArray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let messageTableViewCell = uiTableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell", for: indexPath) as! MessageTableViewCell
         messageTableViewCell.messageLabel.layer.masksToBounds = true
-        messageTableViewCell.messageLabel.layer.cornerRadius = 8
         
-        messageTableViewCell.createdLabel.text = mes?.date.stringPresentation
-        messageTableViewCell.messageLabel.text = mes?.body.text
-        messageTableViewCell.userNameLabel.text = mes?.nickname
+        let sms = messagesArray[indexPath.row]
         
+        messageTableViewCell.createdLabel.text = sms.date.stringPresentation
+        messageTableViewCell.messageLabel.text = sms.body.text
+        messageTableViewCell.userNameLabel.text = sms.nickname
+//        messageTableViewCell.messageLabel.frame = CGRect( x: messageTableViewCell.messageLabel.frame.origin.x - 10, y: messageTableViewCell.messageLabel.frame.origin.y - 4, width: messageTableViewCell.messageLabel.frame.width + 20,height: messageTableViewCell.messageLabel.frame.height + 8) ??????
+        
+        //messageTableViewCell.messageLabel.drawText(in: CGRect.init(x: 10, y: 5, width: 5, height: 5))  ?????
         return messageTableViewCell
     }
 }

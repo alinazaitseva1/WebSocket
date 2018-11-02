@@ -8,6 +8,8 @@
 
 import Foundation
 
+// Enum to message type in received JSON
+
 enum MessageType: String {
     
     case onlineStatus

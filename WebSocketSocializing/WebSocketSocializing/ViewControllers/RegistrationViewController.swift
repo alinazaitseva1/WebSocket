@@ -13,7 +13,7 @@ class RegistrationViewController: UIViewController {
     // MARK: - Outlets
     
     @IBOutlet weak var inputNameTextField: UITextField!
-    @IBOutlet weak var okButton: UIButton!
+    @IBOutlet weak var okButton: ChangeStateButton!
     
     // MARK: - Vars
     
@@ -26,7 +26,7 @@ class RegistrationViewController: UIViewController {
     @IBAction func pushOkButton(_ sender: UIButton) {
         let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
         let chatVC = chatStoryboard.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
-        chatVC.nickname = self.nickname
+        chatVC.nickname = self.nickname // delegate to past nickname to chat vc
         self.navigationController?.pushViewController(chatVC, animated: true)
     }
     
@@ -34,12 +34,13 @@ class RegistrationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
     
     // MARK: - TextField function
     
     @IBAction func textFieldEditingChanged(_ sender: UITextField) {
-        
+        // Turning on/off ok button
+        okButton.isEnabled = nickname.count >= minimumSymbolsAmount
     }
 }

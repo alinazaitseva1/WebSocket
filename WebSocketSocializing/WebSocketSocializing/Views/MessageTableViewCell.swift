@@ -15,5 +15,4 @@ class MessageTableViewCell: UITableViewCell {
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var createdLabel: UILabel!
-    
 }
