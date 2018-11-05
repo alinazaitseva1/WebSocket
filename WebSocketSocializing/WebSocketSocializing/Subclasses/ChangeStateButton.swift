@@ -16,10 +16,10 @@ class ChangeStateButton: UIButton {
         }
         set {
             if newValue == true {
-                self.backgroundColor = .gray
+                self.backgroundColor = CustomColor.disabledBlueColor.color
                 self.layer.borderWidth = 1
             } else {
-                self.backgroundColor = .red
+                self.backgroundColor = CustomColor.lightGreenState.color
                 self.layer.borderWidth = 1
             }
             super.isEnabled = newValue

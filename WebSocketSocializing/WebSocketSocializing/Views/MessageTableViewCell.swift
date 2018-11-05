@@ -12,6 +12,8 @@ class MessageTableViewCell: UITableViewCell {
 
     // MARK: - Outlets
     
+    @IBOutlet weak var messageContainerView: UIView!
+    @IBOutlet weak var messageView: UIView!
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var createdLabel: UILabel!

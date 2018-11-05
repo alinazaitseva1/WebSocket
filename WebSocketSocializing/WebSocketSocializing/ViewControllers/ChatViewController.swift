@@ -37,10 +37,6 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         }
     }
     
-    // MARK: - Consts
-    
-    static let messageDictionary : [String: Any] = [ "nickname":"name", "date":"2018-09-21T12:45:12","type":"sendMessage","body": [ "text": "Test Message" ] ]
-    
     // MARK: - Actions
     
     @IBAction func pushSendMessageButtom(_ sender: UIButton) {
@@ -54,12 +50,12 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         
         socket.write(data: jsonData!)
         inputTextTextField.text = "" // to clear textfield after message was sent
-        
+        UserDefaults.standard.set(nickname, forKey: nickname)
     }
     
     // MARK: - Someone else's message imitation
     
-    @IBAction func alienMessage(_ sender: UIBarButtonItem) {
+    @IBAction func pushAlienMessage(_ sender: UIBarButtonItem) {
         
         let dict: [String : Any] = [ "nickname": "John",
                                      "date": "2018-09-21T12:45:12",
@@ -69,6 +65,7 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: [])
         
         socket.write(data: jsonData!)
+        UserDefaults.standard.removeObject(forKey: nickname)
     }
     
     
@@ -127,16 +124,24 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let messageTableViewCell = uiTableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell", for: indexPath) as! MessageTableViewCell
-        messageTableViewCell.messageLabel.layer.masksToBounds = true
-        
+        messageTableViewCell.messageView.layer.masksToBounds = true
+        messageTableViewCell.messageView.layer.cornerRadius = 16
         let sms = messagesArray[indexPath.row]
         
         messageTableViewCell.createdLabel.text = sms.date.stringPresentation
         messageTableViewCell.messageLabel.text = sms.body.text
         messageTableViewCell.userNameLabel.text = sms.nickname
-//        messageTableViewCell.messageLabel.frame = CGRect( x: messageTableViewCell.messageLabel.frame.origin.x - 10, y: messageTableViewCell.messageLabel.frame.origin.y - 4, width: messageTableViewCell.messageLabel.frame.width + 20,height: messageTableViewCell.messageLabel.frame.height + 8) ??????
         
-        //messageTableViewCell.messageLabel.drawText(in: CGRect.init(x: 10, y: 5, width: 5, height: 5))  ?????
+        if UserDefaults.standard.string(forKey: nickname) == nickname {
+            
+            messageTableViewCell.messageView.backgroundColor = CustomColor.grayDefault.color
+            messageTableViewCell.messageContainerView.flipX()
+            //messageTableViewCell.messageView.translatesAutoresizingMaskIntoConstraints = false
+            //[viewA removeConstraint:self.myViewsLeftConstraint];
+            // TODO: - create outlets from constraints 
+            //messageTableViewCell.messageView.leftAnchor.constraint(equalTo: messageTableViewCell.messageContainerView.leftAnchor).isActive = true
+        }
+        
         return messageTableViewCell
     }
 }
