@@ -24,6 +24,8 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     @IBOutlet weak var inputTextTextField: UITextField!
     @IBOutlet weak var sendMessageButton: ChangeStateButton!
     
+    @IBOutlet var showingTypingView: [UIView]!
+    
     // MARK: - Vars
     
     var socket: WebSocket!
@@ -65,7 +67,6 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: [])
         
         socket.write(data: jsonData!)
-        UserDefaults.standard.removeObject(forKey: nickname)
     }
     
     
@@ -79,6 +80,14 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         socket.connect()
         noConnectionView.isHidden = true
         isTypingView.isHidden = true
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        //        for view in showingTypingView {
+        //            view.makeRounded()
+        //        }
     }
     
     deinit {
@@ -132,14 +141,22 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
         messageTableViewCell.messageLabel.text = sms.body.text
         messageTableViewCell.userNameLabel.text = sms.nickname
         
-        if UserDefaults.standard.string(forKey: nickname) == nickname {
+        if UserDefaults.standard.string(forKey: nickname) == sms.nickname {
             
             messageTableViewCell.messageView.backgroundColor = CustomColor.grayDefault.color
+            
+            messageTableViewCell.messageContainerView.flipY()
+            messageTableViewCell.contentView.flipX()
+            
+            
+        } else {
+            messageTableViewCell.messageView.backgroundColor = CustomColor.disabledBlueColor.color
             messageTableViewCell.messageContainerView.flipX()
-            //messageTableViewCell.messageView.translatesAutoresizingMaskIntoConstraints = false
-            //[viewA removeConstraint:self.myViewsLeftConstraint];
-            // TODO: - create outlets from constraints 
-            //messageTableViewCell.messageView.leftAnchor.constraint(equalTo: messageTableViewCell.messageContainerView.leftAnchor).isActive = true
+            messageTableViewCell.contentView.flipY()
+            isTypingView.isHidden = false
+            for view in showingTypingView {
+                view.makeRounded()
+            }
         }
         
         return messageTableViewCell

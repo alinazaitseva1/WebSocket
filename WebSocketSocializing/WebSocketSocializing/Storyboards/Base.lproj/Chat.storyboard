@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -152,28 +152,45 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BnX-Ev-fj7">
                                                 <rect key="frame" x="0.0" y="23" width="320" height="35"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oIF-6n-hHj">
-                                                        <rect key="frame" x="169.5" y="8" width="143.5" height="19"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="is typing" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ee5-0i-hs1">
-                                                        <rect key="frame" x="122" y="8" width="41.5" height="19"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
-                                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xS6-6d-TAP">
+                                                        <rect key="frame" x="169" y="8" width="38" height="19"/>
+                                                        <subviews>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rNJ-Sf-389">
+                                                                <rect key="frame" x="3" y="5" width="8" height="8"/>
+                                                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dhC-mK-DNO">
+                                                                <rect key="frame" x="13" y="5" width="8" height="8"/>
+                                                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N2E-tZ-IL5">
+                                                                <rect key="frame" x="24" y="5" width="8" height="8"/>
+                                                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </view>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="N2E-tZ-IL5" secondAttribute="trailing" constant="6" id="064-05-pk7"/>
+                                                            <constraint firstItem="dhC-mK-DNO" firstAttribute="leading" secondItem="rNJ-Sf-389" secondAttribute="trailing" constant="2" id="2UN-KU-MCx"/>
+                                                            <constraint firstItem="N2E-tZ-IL5" firstAttribute="leading" secondItem="dhC-mK-DNO" secondAttribute="trailing" constant="3" id="3mA-cs-fXk"/>
+                                                            <constraint firstAttribute="bottom" secondItem="rNJ-Sf-389" secondAttribute="bottom" constant="6" id="6T7-HB-yED"/>
+                                                            <constraint firstItem="N2E-tZ-IL5" firstAttribute="leading" secondItem="xS6-6d-TAP" secondAttribute="leading" constant="24" id="9Nj-Th-cx1"/>
+                                                            <constraint firstItem="rNJ-Sf-389" firstAttribute="leading" secondItem="xS6-6d-TAP" secondAttribute="leading" constant="3" id="YA8-Xo-4pW"/>
+                                                            <constraint firstAttribute="bottom" secondItem="dhC-mK-DNO" secondAttribute="bottom" constant="6" id="aAy-fx-uhF"/>
+                                                            <constraint firstAttribute="bottom" secondItem="N2E-tZ-IL5" secondAttribute="bottom" constant="6" id="co7-dB-WKU"/>
+                                                            <constraint firstItem="dhC-mK-DNO" firstAttribute="top" secondItem="xS6-6d-TAP" secondAttribute="top" constant="5" id="eq7-nF-nRk"/>
+                                                            <constraint firstItem="rNJ-Sf-389" firstAttribute="top" secondItem="xS6-6d-TAP" secondAttribute="top" constant="5" id="txg-NK-jAE"/>
+                                                            <constraint firstItem="dhC-mK-DNO" firstAttribute="leading" secondItem="xS6-6d-TAP" secondAttribute="leading" constant="13" id="vpA-Q5-6M2"/>
+                                                            <constraint firstItem="N2E-tZ-IL5" firstAttribute="top" secondItem="xS6-6d-TAP" secondAttribute="top" constant="5" id="yhM-lu-t9O"/>
+                                                        </constraints>
+                                                    </view>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstItem="oIF-6n-hHj" firstAttribute="top" secondItem="BnX-Ev-fj7" secondAttribute="top" constant="8" id="0eN-I7-Ht4"/>
-                                                    <constraint firstAttribute="trailing" secondItem="oIF-6n-hHj" secondAttribute="trailing" constant="7" id="B0J-hN-IUQ"/>
                                                     <constraint firstAttribute="height" constant="35" id="E6z-Ad-maP"/>
-                                                    <constraint firstAttribute="bottom" secondItem="oIF-6n-hHj" secondAttribute="bottom" constant="8" id="Ys2-Mw-ecA"/>
-                                                    <constraint firstItem="ee5-0i-hs1" firstAttribute="leading" secondItem="BnX-Ev-fj7" secondAttribute="leading" constant="122" id="jym-pH-kjj"/>
-                                                    <constraint firstAttribute="bottom" secondItem="ee5-0i-hs1" secondAttribute="bottom" constant="8" id="lvd-EH-ujm"/>
-                                                    <constraint firstItem="ee5-0i-hs1" firstAttribute="top" secondItem="BnX-Ev-fj7" secondAttribute="top" constant="8" id="mgK-iN-JuO"/>
-                                                    <constraint firstItem="oIF-6n-hHj" firstAttribute="leading" secondItem="ee5-0i-hs1" secondAttribute="trailing" constant="6" id="zEG-SX-233"/>
+                                                    <constraint firstItem="xS6-6d-TAP" firstAttribute="leading" secondItem="BnX-Ev-fj7" secondAttribute="leading" constant="169" id="LbO-LS-yBi"/>
+                                                    <constraint firstAttribute="trailing" secondItem="xS6-6d-TAP" secondAttribute="trailing" constant="113" id="SA9-mI-KQj"/>
+                                                    <constraint firstItem="xS6-6d-TAP" firstAttribute="top" secondItem="BnX-Ev-fj7" secondAttribute="top" constant="8" id="eOj-oH-aTz"/>
+                                                    <constraint firstAttribute="bottom" secondItem="xS6-6d-TAP" secondAttribute="bottom" constant="8" id="vUZ-n5-7GG"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ohV-xq-rTJ">
@@ -237,7 +254,7 @@
                     <navigationItem key="navigationItem" id="td2-0B-jNe">
                         <barButtonItem key="rightBarButtonItem" title="alien" id="ddW-XT-1ft">
                             <connections>
-                                <action selector="alienMessage:" destination="BYZ-38-t0r" id="4bK-cw-yYw"/>
+                                <action selector="pushAlienMessage:" destination="BYZ-38-t0r" id="ZMq-vY-XsW"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -245,12 +262,14 @@
                     <connections>
                         <outlet property="inputTextTextField" destination="gDz-ok-IBQ" id="Qa8-3r-YZ7"/>
                         <outlet property="inputTextView" destination="ohV-xq-rTJ" id="gbQ-C8-Du1"/>
-                        <outlet property="isTypingUserNameLabel" destination="oIF-6n-hHj" id="aQM-JL-qPm"/>
                         <outlet property="isTypingView" destination="BnX-Ev-fj7" id="mce-Hg-c9m"/>
                         <outlet property="noConnectionView" destination="uu9-5y-LMm" id="rfk-tD-uyV"/>
                         <outlet property="sendMessageButton" destination="S69-jD-mvY" id="QXt-IG-gk6"/>
                         <outlet property="showTypingView" destination="2Ny-Wr-BoA" id="o8r-2M-Z2O"/>
                         <outlet property="uiTableView" destination="AxO-LT-b5E" id="RUM-9N-abf"/>
+                        <outletCollection property="showingTypingView" destination="rNJ-Sf-389" collectionClass="NSMutableArray" id="GWD-On-112"/>
+                        <outletCollection property="showingTypingView" destination="dhC-mK-DNO" collectionClass="NSMutableArray" id="RKe-8l-vU9"/>
+                        <outletCollection property="showingTypingView" destination="N2E-tZ-IL5" collectionClass="NSMutableArray" id="X3R-My-Tc2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

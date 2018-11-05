@@ -20,7 +20,7 @@ enum CustomColor {
             
         case .grayDefault:       return UIColor(red: 242, green: 243, blue: 244)
         case .lightGreenState:   return UIColor(red: 216, green: 222, blue: 202)
-        case .disabledBlueColor: return UIColor(red: 240, green: 248, blue: 255)
+        case .disabledBlueColor: return UIColor(red: 203, green: 239, blue: 255)
 
         }
     }
