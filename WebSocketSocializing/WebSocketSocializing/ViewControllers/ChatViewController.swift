@@ -35,7 +35,7 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     }
     var nickname: String!
     var messagesArray: [MessageEntity] = [] {
-        didSet{
+        didSet {
             uiTableView.reloadData()
         }
     }
@@ -63,13 +63,12 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         let dict: [String : Any] = [ "nickname": "John",
                                      "date": "2018-09-21T12:45:12",
                                      "type": MessageType.sendMessage.rawValue,
-                                     "body": [ "text": "Blablablablablabla bla" ] ]
+                                     "body": [ "text": "blablablablablabla...bla" ] ]
         
         let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: [])
         
         socket.write(data: jsonData!)
     }
-    
     
     // MARK: - Init functions
     
@@ -81,13 +80,21 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         socket.connect()
         noConnectionView.isHidden = true
         isTypingView.isHidden = true
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        for view in jumpingDotsViews {
-            view.makeRounded()
+        
+        for (index, jumpingDotView) in self.jumpingDotsViews.enumerated() {
+            jumpingDotView.makeRounded()
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(index)/10) {
+                UIView.animate(withDuration: 0.5,
+                               delay: 0.4,
+                               options: [.repeat, .autoreverse],
+                               animations: { jumpingDotView.center.y += self.jumpingView.bounds.height },
+                               completion: nil
+                )
+            }
         }
     }
     
@@ -148,26 +155,30 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
             
             messageTableViewCell.messageContainerView.flipX()
             messageTableViewCell.contentView.flipX()
+            messageTableViewCell.userNameLabel.textAlignment = .left
+            messageTableViewCell.createdLabel.textAlignment = .left
             isTypingView.isHidden = true
             
-            
         } else {
+            
             messageTableViewCell.messageView.backgroundColor = CustomColor.disabledBlueColor.color
-            messageTableViewCell.messageContainerView.flipX()
-            messageTableViewCell.contentView.flipX()
+            
+            messageTableViewCell.messageContainerView.transform = .identity
+            messageTableViewCell.contentView.transform = .identity
             isTypingView.isHidden = false
             isTypingUserNameLabel.text = sms.nickname
-            UIView.animate(withDuration: 0.5, delay: 0.4,
-                           options: [.repeat, .autoreverse],
-                           animations: {
-                            for (index, item) in self.jumpingDotsViews.enumerated() {
-                                
-                               item.center.y += self.jumpingView.bounds.height
-                            }
-            },
-                           completion: nil
-            )
+            
         }
+        
+        messageTableViewCell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
+        UIView.animate(withDuration: 0.3, animations: {
+            messageTableViewCell.layer.transform = CATransform3DMakeScale(1.05,1.05,1)
+        },completion: { finished in
+            UIView.animate(withDuration: 0.1, animations: {
+                messageTableViewCell.layer.transform = CATransform3DMakeScale(1,1,1)
+            })
+        })
+        
         return messageTableViewCell
     }
 }

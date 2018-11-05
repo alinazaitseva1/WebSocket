@@ -12,11 +12,7 @@ extension UIView {
     
     /// Flip view horizontally.
     func flipX() {
-        transform = CGAffineTransform(scaleX: -transform.a, y: transform.d)
-    }
-    
-    /// Flip view vertically.
-    func flipY() {
-        transform = CGAffineTransform(scaleX: transform.a, y: -transform.d)
+        transform = .identity
+        transform = CGAffineTransform(scaleX: -1, y: 1)
     }
 }
