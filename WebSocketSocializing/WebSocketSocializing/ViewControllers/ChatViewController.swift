@@ -20,11 +20,12 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     @IBOutlet weak var isTypingView: UIView!
     @IBOutlet weak var isTypingUserNameLabel: UILabel!
     @IBOutlet weak var inputTextView: UIView!
-    @IBOutlet weak var showTypingView: UIView!
+    @IBOutlet weak var jumpingView: UIView!
+    @IBOutlet weak var userAvatarTypingView: UIView!
     @IBOutlet weak var inputTextTextField: UITextField!
     @IBOutlet weak var sendMessageButton: ChangeStateButton!
     
-    @IBOutlet var showingTypingView: [UIView]!
+    @IBOutlet var jumpingDotsViews: [UIView]!
     
     // MARK: - Vars
     
@@ -85,9 +86,9 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        //        for view in showingTypingView {
-        //            view.makeRounded()
-        //        }
+        for view in jumpingDotsViews {
+            view.makeRounded()
+        }
     }
     
     deinit {
@@ -145,20 +146,28 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
             
             messageTableViewCell.messageView.backgroundColor = CustomColor.grayDefault.color
             
-            messageTableViewCell.messageContainerView.flipY()
+            messageTableViewCell.messageContainerView.flipX()
             messageTableViewCell.contentView.flipX()
+            isTypingView.isHidden = true
             
             
         } else {
             messageTableViewCell.messageView.backgroundColor = CustomColor.disabledBlueColor.color
             messageTableViewCell.messageContainerView.flipX()
-            messageTableViewCell.contentView.flipY()
+            messageTableViewCell.contentView.flipX()
             isTypingView.isHidden = false
-            for view in showingTypingView {
-                view.makeRounded()
-            }
+            isTypingUserNameLabel.text = sms.nickname
+            UIView.animate(withDuration: 0.5, delay: 0.4,
+                           options: [.repeat, .autoreverse],
+                           animations: {
+                            for (index, item) in self.jumpingDotsViews.enumerated() {
+                                
+                               item.center.y += self.jumpingView.bounds.height
+                            }
+            },
+                           completion: nil
+            )
         }
-        
         return messageTableViewCell
     }
 }
