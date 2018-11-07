@@ -9,7 +9,7 @@
 import UIKit
 
 class MessageTableViewCell: UITableViewCell {
-
+    
     // MARK: - Outlets
     
     @IBOutlet weak var messageContainerView: UIView!
@@ -17,5 +17,5 @@ class MessageTableViewCell: UITableViewCell {
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var createdLabel: UILabel!
-    
+
 }

@@ -21,11 +21,12 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     @IBOutlet weak var isTypingUserNameLabel: UILabel!
     @IBOutlet weak var inputTextView: UIView!
     @IBOutlet weak var jumpingView: UIView!
-    @IBOutlet weak var userAvatarTypingView: UIView!
     @IBOutlet weak var inputTextTextField: UITextField!
     @IBOutlet weak var sendMessageButton: ChangeStateButton!
     
     @IBOutlet var jumpingDotsViews: [UIView]!
+    
+    @IBOutlet weak var bottomOffsetConstraint: NSLayoutConstraint!
     
     // MARK: - Vars
     
@@ -34,9 +35,12 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         return inputTextTextField.text!
     }
     var nickname: String!
-    var messagesArray: [MessageEntity] = [] {
+    
+    var messagesArray: [MessageEntity] = []
+    var simultaneouslyTypingUsers = ["John", "Tyrion", "Cersei", "Bran", "Aria", "Daenerys"]
+    var typingUsers: [String] = [] {
         didSet {
-            uiTableView.reloadData()
+            isTypingView.isHidden = typingUsers.isEmpty
         }
     }
     
@@ -56,17 +60,18 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         UserDefaults.standard.set(nickname, forKey: nickname)
     }
     
-    // MARK: - Someone else's message imitation
+    // MARK: - Fake data for another user's message imitation
     
     @IBAction func pushAlienMessage(_ sender: UIBarButtonItem) {
         
-        let dict: [String : Any] = [ "nickname": "John",
+        var randomNames = ["John", "Tyrion", "Cersei", "Bran", "Aria", "Daenerys"]
+        let dict: [String : Any] = [ "nickname": randomNames[ Int.random(in: 0 ..< randomNames.count) ],
                                      "date": "2018-09-21T12:45:12",
                                      "type": MessageType.sendMessage.rawValue,
-                                     "body": [ "text": "blablablablablabla...bla" ] ]
+                                     "body": [ "text": "blablablablablablabla" ] ]
         
         let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: [])
-        
+        // isTypingUserNameLabel.text = simultaneouslyTypingUsers.joined(separator: ", ") // in case of many typing users
         socket.write(data: jsonData!)
     }
     
@@ -80,6 +85,9 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         socket.connect()
         noConnectionView.isHidden = true
         isTypingView.isHidden = true
+        
+        setupViewResizerOnKeyboardShown()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -100,40 +108,91 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     
     deinit {
         socket.disconnect()
+        
     }
     
     // - WebSocketDelegate functions
     
     func websocketDidConnect(socket: WebSocketClient) {
         print("websocket is connected")
+        noConnectionView.isHidden = true
+        inputTextView.isHidden = false
     }
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
         print("websocket is disconnected: \(String(describing: error?.localizedDescription))")
+        noConnectionView.isHidden = false
+        isTypingView.isHidden = true
+        inputTextView.isHidden = true
     }
     
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) { }
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         print("got some data: \(data.count)")
+        
         let receivedDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        
         if MessageType.sendMessage.rawValue == receivedDictionary?["type"] as? String {
             let message = MessageEntity(dictionary: receivedDictionary!)
             messagesArray.append(message!)
-        }
+            
+            if MessageType.typingStatus.rawValue == receivedDictionary?["type"] as? String {
+                let typingUser = MessageEntity(dictionary: receivedDictionary!)
+                //typingUsers.append(typingUser!.)
+            }
+            
+            uiTableView.insertRows(at: [IndexPath(row: messagesArray.count - 1, section: 0)], with: UITableView.RowAnimation.left)
+            uiTableView.scrollToRow(at: IndexPath(row: messagesArray.count - 1, section: 0), at: UITableView.ScrollPosition.bottom, animated: true)
+            
+            
+        } 
     }
     
     // MARK: - TextField function
     
     @IBAction func textFieldEditingChanged(_ sender: UITextField) {
+        let symbolsInField = sender.text?.count ?? 0
+        
+        if symbolsInField == minimumSymbolsAmount {
+            isTypingView.isHidden = false
+            isTypingUserNameLabel.text = nickname
+            //if typingUse
+        }
+        
+        if symbolsInField == 0 {
+            isTypingView.isHidden = true
+        }
+        
         // Turning on/off send button
         sendMessageButton.isEnabled = messageText.count >= minimumSymbolsAmount
+    }
+    
+    // MARK: - Keyboard function
+    
+    func setupViewResizerOnKeyboardShown() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    @objc func adjustForKeyboard(notification: Notification) {
+        
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            bottomOffsetConstraint.constant = 0
+            
+        } else {
+            
+            let keyboardScreenEndFrame = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+            bottomOffsetConstraint.constant = keyboardScreenEndFrame.height
+        }
     }
 }
 
 // MARK: - Extension table view UITableViewDelegate, UITableViewDataSource
 
 extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messagesArray.count
     }
@@ -166,18 +225,9 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
             messageTableViewCell.messageContainerView.transform = .identity
             messageTableViewCell.contentView.transform = .identity
             isTypingView.isHidden = false
-            isTypingUserNameLabel.text = sms.nickname
+            isTypingUserNameLabel.text = sms.nickname // in case for showing only one user on typing screen
             
         }
-        
-        messageTableViewCell.layer.transform = CATransform3DMakeScale(0.1,0.1,1)
-        UIView.animate(withDuration: 0.3, animations: {
-            messageTableViewCell.layer.transform = CATransform3DMakeScale(1.05,1.05,1)
-        },completion: { finished in
-            UIView.animate(withDuration: 0.1, animations: {
-                messageTableViewCell.layer.transform = CATransform3DMakeScale(1,1,1)
-            })
-        })
         
         return messageTableViewCell
     }
