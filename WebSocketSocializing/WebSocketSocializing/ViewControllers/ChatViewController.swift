@@ -53,13 +53,11 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     @IBAction func pushSendMessageButtom(_ sender: UIButton) {
         
         let dict: [String : Any] = [ "nickname": nickname,
-                                     "date": "2018-09-21T12:45:12",
+                                     "date": Date().stringPresentation,
                                      "type": MessageType.sendMessage.rawValue,
                                      "body": [ "text": messageText ] ]
         
-        let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: [])
-        
-        socket.write(data: jsonData!)
+        socket.write(data: JSONSerializationHelper.convertToJSONFromDictionary(dict))
         inputTextTextField.text = "" // to clear textfield after message was sent
         sendDataToSocket(isTyping: false)
     }
@@ -70,12 +68,11 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         
         var randomNames = ["John", "Tyrion", "Cersei", "Bran", "Aria", "Daenerys"]
         let dict: [String : Any] = [ "nickname": randomNames[ Int.random(in: 0 ..< randomNames.count) ],
-                                     "date": "2018-09-21T12:45:12",
+                                     "date": Date().stringPresentation,
                                      "type": MessageType.sendMessage.rawValue,
                                      "body": [ "text": "blablablablablablabla" ] ]
         
-        let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: [])
-        socket.write(data: jsonData!)
+        socket.write(data: JSONSerializationHelper.convertToJSONFromDictionary(dict))
     }
     
     // MARK: - Init functions
@@ -115,13 +112,11 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     // - WebSocketDelegate functions
     
     func websocketDidConnect(socket: WebSocketClient) {
-        print("websocket is connected")
         noConnectionView.isHidden = true
         inputTextView.isHidden = false
     }
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
-        print("websocket is disconnected: \(String(describing: error?.localizedDescription))")
         noConnectionView.isHidden = false
         isTypingView.isHidden = true
         inputTextView.isHidden = true
@@ -130,7 +125,6 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     func websocketDidReceiveMessage(socket: WebSocketClient, text: String) { }
     
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
-        print("got some data: \(data.count)")
         
         guard let receivedDictionary = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] else { return }
         
@@ -156,19 +150,20 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         }
     }
     
-    // MARK: - TextField function
+    // MARK: - Network function
     
-    func sendDataToSocket(isTyping: Bool) {
+    private func sendDataToSocket(isTyping: Bool) {
         
         let dict: [String : Any] = [ "nickname": nickname,
-                                     "date": "2018-09-21T12:45:12", // TODO: - Add Date object with current date
-            "type": MessageType.typingStatus.rawValue,
-            "is_typing": isTyping
+                                     "date": Date().stringPresentation,
+                                     "type": MessageType.typingStatus.rawValue,
+                                     "is_typing": isTyping
         ]
         
-        let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: [])
-        socket.write(data: jsonData!)
+        socket.write(data: JSONSerializationHelper.convertToJSONFromDictionary(dict))
     }
+    
+    // MARK: - TextField function
     
     @IBAction func textFieldEditingChanged(_ sender: UITextField) {
         
@@ -206,7 +201,7 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     }
 }
 
-// MARK: - Extension table view UITableViewDelegate, UITableViewDataSource
+// MARK: - Extension tableView UITableViewDelegate, UITableViewDataSource
 
 extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -219,17 +214,14 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
         let messageTableViewCell = uiTableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell", for: indexPath) as! MessageTableViewCell
         
         let sms = messagesArray[indexPath.row]
-        
         messageTableViewCell.configureWith(message: sms)
         
-        if nickname != sms.nickname {
-        
-            messageTableViewCell.messageView.backgroundColor = CustomColor.disabledBlueColor.color
+        if nickname == sms.nickname {
             
-            messageTableViewCell.userNameLabel.textAlignment = .right
-            messageTableViewCell.messageContainerView.transform = .identity
-           
-            messageTableViewCell.contentView.transform = .identity
+            messageTableViewCell.setUpMessageAppearence(at: .left)
+        } else {
+            
+            messageTableViewCell.setUpMessageAppearence(at : .right)
             isTypingView.isHidden = true
         }
         

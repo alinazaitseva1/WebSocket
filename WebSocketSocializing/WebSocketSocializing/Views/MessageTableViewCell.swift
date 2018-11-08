@@ -14,9 +14,8 @@ class MessageTableViewCell: UITableViewCell {
     
     @IBOutlet weak var messageContainerView: UIView!
     @IBOutlet weak var messageView: UIView!
-    
     @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var createdLabel: UILabel!
+    @IBOutlet private weak var createdLabel: UILabel!
     @IBOutlet private weak var messageLabel: UILabel!
     
     public func configureWith(message: MessageEntity) {
@@ -24,12 +23,26 @@ class MessageTableViewCell: UITableViewCell {
         userNameLabel.text = message.nickname
         createdLabel.text = message.date.stringPresentation
         messageLabel.text = message.body.text
+        
         messageView.layer.masksToBounds = true
         messageView.layer.cornerRadius = 16
-        userNameLabel.textAlignment = .left
-        createdLabel.textAlignment = .left
-        messageContainerView.flipX()
-        contentView.flipX()
-        messageView.backgroundColor = CustomColor.grayDefault.color
+        
+    }
+    
+    public func setUpMessageAppearence(at textAlignment: NSTextAlignment) {
+        switch textAlignment {
+        case .left:
+            messageView.backgroundColor = CustomColor.grayDefault.color
+            messageContainerView.flipX()
+            contentView.flipX()
+        case .right:
+            messageView.backgroundColor = CustomColor.disabledBlueColor.color
+            messageContainerView.transform = .identity
+            contentView.transform = .identity
+        default:
+            break
+        }
+        userNameLabel.textAlignment = textAlignment
+        createdLabel.textAlignment = textAlignment
     }
 }

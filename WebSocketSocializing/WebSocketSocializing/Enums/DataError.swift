@@ -13,7 +13,9 @@ enum DataError: Error, LocalizedError {
     case invalidData
     
     var errorDescription: String? {
+        
         switch self {
+            
         case .invalidData:
             return "Invalid data"
         }

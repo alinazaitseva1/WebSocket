@@ -28,6 +28,7 @@
 		DC8E46342188624E00EB8053 /* MessageEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E46332188624E00EB8053 /* MessageEntity.swift */; };
 		DC8E46362188681300EB8053 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E46352188681300EB8053 /* RegistrationViewController.swift */; };
 		DC8E463A2188A89600EB8053 /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC8E46392188A89600EB8053 /* MessageTableViewCell.swift */; };
+		DCD897AD21942D0A00A6E681 /* JSONSerializationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCD897AC21942D0A00A6E681 /* JSONSerializationHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +56,7 @@
 		DC8E46332188624E00EB8053 /* MessageEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageEntity.swift; sourceTree = "<group>"; };
 		DC8E46352188681300EB8053 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
 		DC8E46392188A89600EB8053 /* MessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
+		DCD897AC21942D0A00A6E681 /* JSONSerializationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONSerializationHelper.swift; sourceTree = "<group>"; };
 		FE287901F0D5EC37FE148D28 /* Pods-WebSocketSocializing.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebSocketSocializing.release.xcconfig"; path = "Pods/Target Support Files/Pods-WebSocketSocializing/Pods-WebSocketSocializing.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,13 +106,6 @@
 			path = Subclasses;
 			sourceTree = "<group>";
 		};
-		DC153D4F218AF52D0022CD22 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
 		DC2C3262219050C000272E91 /* UIView */ = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +113,22 @@
 				DC2C32602190361A00272E91 /* UIView+Rounded.swift */,
 			);
 			path = UIView;
+			sourceTree = "<group>";
+		};
+		DC343AFD2194540D00611B28 /* JSONDecoder */ = {
+			isa = PBXGroup;
+			children = (
+				DC153D452189AFD50022CD22 /* JSONDecoder+Dictionary.swift */,
+			);
+			path = JSONDecoder;
+			sourceTree = "<group>";
+		};
+		DC343AFE2194542100611B28 /* UIColor */ = {
+			isa = PBXGroup;
+			children = (
+				7ED9CD6B218FB131003A8F34 /* UIColor+Color.swift */,
+			);
+			path = UIColor;
 			sourceTree = "<group>";
 		};
 		DC8E45FE21873A1400EB8053 = {
@@ -148,8 +159,8 @@
 				DC8E462521873F6500EB8053 /* Extensions */,
 				DC8E461F21873E6000EB8053 /* Network */,
 				DC153D4C218AF2F10022CD22 /* Subclasses */,
-				DC153D4F218AF52D0022CD22 /* Utilities */,
 				DC8E462121873E8500EB8053 /* Storyboards */,
+				DCD897AB21942CCF00A6E681 /* Utilities */,
 				DC8E462021873E7700EB8053 /* SupportingFiles */,
 				DC8E462221873E9400EB8053 /* Resources */,
 			);
@@ -237,12 +248,20 @@
 		DC8E462521873F6500EB8053 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				DC343AFE2194542100611B28 /* UIColor */,
+				DC343AFD2194540D00611B28 /* JSONDecoder */,
 				DC2C3262219050C000272E91 /* UIView */,
 				DC153D472189B8280022CD22 /* Date */,
-				DC153D452189AFD50022CD22 /* JSONDecoder+Dictionary.swift */,
-				7ED9CD6B218FB131003A8F34 /* UIColor+Color.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		DCD897AB21942CCF00A6E681 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				DCD897AC21942D0A00A6E681 /* JSONSerializationHelper.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -377,6 +396,7 @@
 				7ED9CD6A218FB0FC003A8F34 /* CustomColor.swift in Sources */,
 				7ED9CD6C218FB131003A8F34 /* UIColor+Color.swift in Sources */,
 				DC153D462189AFD50022CD22 /* JSONDecoder+Dictionary.swift in Sources */,
+				DCD897AD21942D0A00A6E681 /* JSONSerializationHelper.swift in Sources */,
 				DC8E46362188681300EB8053 /* RegistrationViewController.swift in Sources */,
 				DC153D4B2189B8F20022CD22 /* Date+String.swift in Sources */,
 				7ED9CD6E218FB569003A8F34 /* UIView+AffineTransform.swift in Sources */,

@@ -30,7 +30,7 @@ class JSONResponce {
   ]
 }
 """
-
+    
     static let sendMessage = """
     {
         "nickname": "name",
