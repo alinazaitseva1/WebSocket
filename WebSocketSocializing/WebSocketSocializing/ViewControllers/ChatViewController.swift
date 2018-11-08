@@ -217,27 +217,18 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let messageTableViewCell = uiTableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell", for: indexPath) as! MessageTableViewCell
-        messageTableViewCell.messageView.layer.masksToBounds = true
-        messageTableViewCell.messageView.layer.cornerRadius = 16
+        
         let sms = messagesArray[indexPath.row]
         
         messageTableViewCell.configureWith(message: sms)
         
-        if nickname == sms.nickname {
-            
-            messageTableViewCell.messageView.backgroundColor = CustomColor.grayDefault.color
-            
-            messageTableViewCell.messageContainerView.flipX()
-            messageTableViewCell.contentView.flipX()
-            messageTableViewCell.userNameLabel.textAlignment = .left
-            messageTableViewCell.createdLabel.textAlignment = .left
-            
-        } else {
-            
+        if nickname != sms.nickname {
+        
             messageTableViewCell.messageView.backgroundColor = CustomColor.disabledBlueColor.color
             
             messageTableViewCell.userNameLabel.textAlignment = .right
             messageTableViewCell.messageContainerView.transform = .identity
+           
             messageTableViewCell.contentView.transform = .identity
             isTypingView.isHidden = true
         }

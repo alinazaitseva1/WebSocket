@@ -24,6 +24,12 @@ class MessageTableViewCell: UITableViewCell {
         userNameLabel.text = message.nickname
         createdLabel.text = message.date.stringPresentation
         messageLabel.text = message.body.text
-        
+        messageView.layer.masksToBounds = true
+        messageView.layer.cornerRadius = 16
+        userNameLabel.textAlignment = .left
+        createdLabel.textAlignment = .left
+        messageContainerView.flipX()
+        contentView.flipX()
+        messageView.backgroundColor = CustomColor.grayDefault.color
     }
 }
