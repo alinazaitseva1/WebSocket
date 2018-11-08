@@ -14,8 +14,16 @@ class MessageTableViewCell: UITableViewCell {
     
     @IBOutlet weak var messageContainerView: UIView!
     @IBOutlet weak var messageView: UIView!
+    
     @IBOutlet weak var userNameLabel: UILabel!
-    @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var createdLabel: UILabel!
-
+    @IBOutlet private weak var messageLabel: UILabel!
+    
+    public func configureWith(message: MessageEntity) {
+        
+        userNameLabel.text = message.nickname
+        createdLabel.text = message.date.stringPresentation
+        messageLabel.text = message.body.text
+        
+    }
 }

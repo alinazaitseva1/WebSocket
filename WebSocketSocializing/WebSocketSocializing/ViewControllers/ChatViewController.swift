@@ -9,6 +9,9 @@
 import UIKit
 import Starscream
 
+
+// MARK: - Internal const
+
 let minimumSymbolsAmount = 1
 
 class ChatViewController: UIViewController, WebSocketDelegate {
@@ -218,9 +221,7 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
         messageTableViewCell.messageView.layer.cornerRadius = 16
         let sms = messagesArray[indexPath.row]
         
-        messageTableViewCell.createdLabel.text = sms.date.stringPresentation
-        messageTableViewCell.messageLabel.text = sms.body.text
-        messageTableViewCell.userNameLabel.text = sms.nickname
+        messageTableViewCell.configureWith(message: sms)
         
         if nickname == sms.nickname {
             
@@ -234,8 +235,8 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             
             messageTableViewCell.messageView.backgroundColor = CustomColor.disabledBlueColor.color
+            
             messageTableViewCell.userNameLabel.textAlignment = .right
-            messageTableViewCell.createdLabel.textAlignment = .right
             messageTableViewCell.messageContainerView.transform = .identity
             messageTableViewCell.contentView.transform = .identity
             isTypingView.isHidden = true
