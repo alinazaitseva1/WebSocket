@@ -24,12 +24,12 @@ class RegistrationViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func pushOkButton(_ sender: UIButton) {
+        
         let chatStoryboard = UIStoryboard(name: "Chat", bundle: nil)
         let chatVC = chatStoryboard.instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
         chatVC.nickname = self.nickname // delegate to past nickname to chat vc
         self.navigationController?.pushViewController(chatVC, animated: true)
-    
-        UserDefaults.standard.set(nickname, forKey: nickname)
+        
     }
     
     // MARK: - Init function

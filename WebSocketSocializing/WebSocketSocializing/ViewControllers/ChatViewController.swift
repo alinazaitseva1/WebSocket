@@ -9,6 +9,7 @@
 import UIKit
 import Starscream
 
+let minimumSymbolsAmount = 1
 
 class ChatViewController: UIViewController, WebSocketDelegate {
     
@@ -25,22 +26,22 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     @IBOutlet weak var sendMessageButton: ChangeStateButton!
     
     @IBOutlet var jumpingDotsViews: [UIView]!
-    
     @IBOutlet weak var bottomOffsetConstraint: NSLayoutConstraint!
     
     // MARK: - Vars
     
-    var socket: WebSocket!
+    private var socket: WebSocket!
     private var messageText: String {
         return inputTextTextField.text!
     }
     var nickname: String!
     
-    var messagesArray: [MessageEntity] = []
-    var simultaneouslyTypingUsers = ["John", "Tyrion", "Cersei", "Bran", "Aria", "Daenerys"]
-    var typingUsers: [String] = [] {
+    private var messagesArray: [MessageEntity] = []
+    
+    private var typingUsers: Set<String> = [] {
         didSet {
             isTypingView.isHidden = typingUsers.isEmpty
+            isTypingUserNameLabel.text = typingUsers.joined(separator: ", ")
         }
     }
     
@@ -57,7 +58,7 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         
         socket.write(data: jsonData!)
         inputTextTextField.text = "" // to clear textfield after message was sent
-        UserDefaults.standard.set(nickname, forKey: nickname)
+        sendDataToSocket(isTyping: false)
     }
     
     // MARK: - Fake data for another user's message imitation
@@ -71,7 +72,6 @@ class ChatViewController: UIViewController, WebSocketDelegate {
                                      "body": [ "text": "blablablablablablabla" ] ]
         
         let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: [])
-        // isTypingUserNameLabel.text = simultaneouslyTypingUsers.joined(separator: ", ") // in case of many typing users
         socket.write(data: jsonData!)
     }
     
@@ -87,7 +87,6 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         isTypingView.isHidden = true
         
         setupViewResizerOnKeyboardShown()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,7 +107,6 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     
     deinit {
         socket.disconnect()
-        
     }
     
     // - WebSocketDelegate functions
@@ -131,37 +129,53 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     func websocketDidReceiveData(socket: WebSocketClient, data: Data) {
         print("got some data: \(data.count)")
         
-        let receivedDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        guard let receivedDictionary = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [String: Any] else { return }
         
-        if MessageType.sendMessage.rawValue == receivedDictionary?["type"] as? String {
-            let message = MessageEntity(dictionary: receivedDictionary!)
+        if MessageType.sendMessage.rawValue == receivedDictionary["type"] as? String {
+            let message = MessageEntity(dictionary: receivedDictionary)
             messagesArray.append(message!)
-            
-            if MessageType.typingStatus.rawValue == receivedDictionary?["type"] as? String {
-                let typingUser = MessageEntity(dictionary: receivedDictionary!)
-                //typingUsers.append(typingUser!.)
-            }
             
             uiTableView.insertRows(at: [IndexPath(row: messagesArray.count - 1, section: 0)], with: UITableView.RowAnimation.left)
             uiTableView.scrollToRow(at: IndexPath(row: messagesArray.count - 1, section: 0), at: UITableView.ScrollPosition.bottom, animated: true)
+        }
+        
+        if MessageType.typingStatus.rawValue == receivedDictionary["type"] as? String {
             
-            
-        } 
+            if let nickName = receivedDictionary["nickname"] as? String {
+                
+                if receivedDictionary["is_typing"] as? Bool == true {
+                    typingUsers.insert(nickName)
+                    
+                } else if typingUsers.contains(nickName) {
+                    typingUsers.remove(nickName)
+                }
+            }
+        }
     }
     
     // MARK: - TextField function
     
+    func sendDataToSocket(isTyping: Bool) {
+        
+        let dict: [String : Any] = [ "nickname": nickname,
+                                     "date": "2018-09-21T12:45:12", // TODO: - Add Date object with current date
+            "type": MessageType.typingStatus.rawValue,
+            "is_typing": isTyping
+        ]
+        
+        let jsonData = try? JSONSerialization.data(withJSONObject: dict, options: [])
+        socket.write(data: jsonData!)
+    }
+    
     @IBAction func textFieldEditingChanged(_ sender: UITextField) {
+        
         let symbolsInField = sender.text?.count ?? 0
         
         if symbolsInField == minimumSymbolsAmount {
-            isTypingView.isHidden = false
-            isTypingUserNameLabel.text = nickname
-            //if typingUse
-        }
-        
-        if symbolsInField == 0 {
-            isTypingView.isHidden = true
+            sendDataToSocket(isTyping: true)
+            
+        } else if symbolsInField == 0 {
+            sendDataToSocket(isTyping: false)
         }
         
         // Turning on/off send button
@@ -208,7 +222,7 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
         messageTableViewCell.messageLabel.text = sms.body.text
         messageTableViewCell.userNameLabel.text = sms.nickname
         
-        if UserDefaults.standard.string(forKey: nickname) == sms.nickname {
+        if nickname == sms.nickname {
             
             messageTableViewCell.messageView.backgroundColor = CustomColor.grayDefault.color
             
@@ -216,17 +230,15 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
             messageTableViewCell.contentView.flipX()
             messageTableViewCell.userNameLabel.textAlignment = .left
             messageTableViewCell.createdLabel.textAlignment = .left
-            isTypingView.isHidden = true
             
         } else {
             
             messageTableViewCell.messageView.backgroundColor = CustomColor.disabledBlueColor.color
-            
+            messageTableViewCell.userNameLabel.textAlignment = .right
+            messageTableViewCell.createdLabel.textAlignment = .right
             messageTableViewCell.messageContainerView.transform = .identity
             messageTableViewCell.contentView.transform = .identity
-            isTypingView.isHidden = false
-            isTypingUserNameLabel.text = sms.nickname // in case for showing only one user on typing screen
-            
+            isTypingView.isHidden = true
         }
         
         return messageTableViewCell
