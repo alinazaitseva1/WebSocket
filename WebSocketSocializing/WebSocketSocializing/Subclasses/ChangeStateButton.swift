@@ -16,9 +16,10 @@ class ChangeStateButton: UIButton {
         }
         set {
             if newValue == true {
-                self.layer.borderWidth = 1
+                self.setTitleColor(CustomColor.disabledBlueColor.color, for: .normal)
+                
             } else {
-                self.layer.borderWidth = 1
+                self.setTitleColor(CustomColor.lightGreenState.color, for: .normal)
             }
             super.isEnabled = newValue
         }

@@ -1,16 +1,20 @@
 PODS:
+  - ReachabilitySwift (4.2.1)
   - Starscream (3.0.5)
 
 DEPENDENCIES:
+  - ReachabilitySwift
   - Starscream (~> 3.0.2)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - ReachabilitySwift
     - Starscream
 
 SPEC CHECKSUMS:
+  ReachabilitySwift: 35720ffea59c1c76d15f885be77fd33e33985427
   Starscream: faf918b2f2eff7d5dd21180646bf015a669673bd
 
-PODFILE CHECKSUM: c43935118bca4da0806be89dc38de19f9f6a6a39
+PODFILE CHECKSUM: b21873c923285781284637862eed72c2ee8857e7
 
 COCOAPODS: 1.5.3

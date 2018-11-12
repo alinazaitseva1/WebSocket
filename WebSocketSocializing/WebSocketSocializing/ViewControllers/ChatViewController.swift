@@ -10,10 +10,6 @@ import UIKit
 import Starscream
 
 
-// MARK: - Internal const
-
-let minimumSymbolsAmount = 1
-
 class ChatViewController: UIViewController, WebSocketDelegate {
     
     // MARK: - Outlets
@@ -30,6 +26,10 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     
     @IBOutlet var jumpingDotsViews: [UIView]!
     @IBOutlet weak var bottomOffsetConstraint: NSLayoutConstraint!
+    
+    // MARK: - Consts
+    
+    let minimumSymbolsAmount = 1
     
     // MARK: - Vars
     
@@ -59,12 +59,12 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         
         socket.write(data: JSONSerializationHelper.convertToJSONFromDictionary(dict))
         inputTextTextField.text = "" // to clear textfield after message was sent
-        sendDataToSocket(isTyping: false)
+        sendTypingStatusToSocket(isTyping: false)
     }
     
     // MARK: - Fake data for another user's message imitation
     
-    @IBAction func pushAlienMessage(_ sender: UIBarButtonItem) {
+    @IBAction func pushAlienMessageButton(_ sender: UIBarButtonItem) {
         
         var randomNames = ["John", "Tyrion", "Cersei", "Bran", "Aria", "Daenerys"]
         let dict: [String : Any] = [ "nickname": randomNames[ Int.random(in: 0 ..< randomNames.count) ],
@@ -87,6 +87,7 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         isTypingView.isHidden = true
         
         setupViewResizerOnKeyboardShown()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -105,18 +106,25 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        if self.isMovingFromParent {
+            sendOnlineStatusToSocket(isOnline: false)
+        }
+    }
+    
     deinit {
         socket.disconnect()
     }
     
-    // - WebSocketDelegate functions
+    // MARK: - WebSocketDelegate functions
     
     func websocketDidConnect(socket: WebSocketClient) {
-        noConnectionView.isHidden = true
-        inputTextView.isHidden = false
     }
     
     func websocketDidDisconnect(socket: WebSocketClient, error: Error?) {
+        print("websocket is disconnected: \(String(describing: error?.localizedDescription))")
         noConnectionView.isHidden = false
         isTypingView.isHidden = true
         inputTextView.isHidden = true
@@ -152,7 +160,7 @@ class ChatViewController: UIViewController, WebSocketDelegate {
     
     // MARK: - Network function
     
-    private func sendDataToSocket(isTyping: Bool) {
+    private func sendTypingStatusToSocket(isTyping: Bool) {
         
         let dict: [String : Any] = [ "nickname": nickname,
                                      "date": Date().stringPresentation,
@@ -163,6 +171,16 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         socket.write(data: JSONSerializationHelper.convertToJSONFromDictionary(dict))
     }
     
+    private func sendOnlineStatusToSocket(isOnline: Bool) {
+        
+        let dict: [String : Any] = [ "nickname": nickname,
+                                     "date": Date().stringPresentation,
+                                     "type": MessageType.onlineStatus.rawValue,
+                                     "is_online": isOnline
+        ]
+        socket.write(data: JSONSerializationHelper.convertToJSONFromDictionary(dict))
+    }
+    
     // MARK: - TextField function
     
     @IBAction func textFieldEditingChanged(_ sender: UITextField) {
@@ -170,10 +188,10 @@ class ChatViewController: UIViewController, WebSocketDelegate {
         let symbolsInField = sender.text?.count ?? 0
         
         if symbolsInField == minimumSymbolsAmount {
-            sendDataToSocket(isTyping: true)
+            sendTypingStatusToSocket(isTyping: true)
             
         } else if symbolsInField == 0 {
-            sendDataToSocket(isTyping: false)
+            sendTypingStatusToSocket(isTyping: false)
         }
         
         // Turning on/off send button
@@ -214,7 +232,7 @@ extension ChatViewController: UITableViewDelegate, UITableViewDataSource {
         let messageTableViewCell = uiTableView.dequeueReusableCell(withIdentifier: "MessageTableViewCell", for: indexPath) as! MessageTableViewCell
         
         let sms = messagesArray[indexPath.row]
-        messageTableViewCell.configureWith(message: sms)
+        messageTableViewCell.configureWith(message: sms) 
         
         if nickname == sms.nickname {
             

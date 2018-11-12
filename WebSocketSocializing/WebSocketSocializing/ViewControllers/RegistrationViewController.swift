@@ -15,6 +15,10 @@ class RegistrationViewController: UIViewController {
     @IBOutlet weak var inputNameTextField: UITextField!
     @IBOutlet weak var okButton: ChangeStateButton!
     
+    // MARK: - Consts
+    
+    let minimumSymbolsAmount = 1
+    
     // MARK: - Vars
     
     var nickname: String {
